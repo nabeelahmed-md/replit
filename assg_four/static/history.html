@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{%static 'style_history.css' %}">
+    <title>HISTORY</title>
+  </head>
+  <body>
+    <form method="post">
+      {% csrf_token %}
+      <label for="region">Select Region:</label>
+      <select name="region" id="region">
+        <option value="">All Regions</option>
+        {% for region in regions %}
+        <option value="{{ region.id }}">{{ region.name }}</option>
+        {% endfor %}
+      </select>
+      <label for="day">Select Day:</label>
+      <select name="day" id="day">
+        <option value="">All Days</option>
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+        <option value="Saturday">Saturday</option>
+        <option value="Sunday">Sunday</option>
+      </select>
+      <input type="submit" value="Filter" />
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Street Address</th>
+          <th>Region</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ticket in tickets %}
+        <tr>
+          <td>{{ ticket.time }}</td>
+          <td>{{ ticket.street_address }}</td>
+          <td>{{ ticket.region }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="{% url 'home' %}">Go To HomePage</a>
+  </body>
+</html>
